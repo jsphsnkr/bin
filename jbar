@@ -1,0 +1,22 @@
+#! /bin/bash
+
+screenw=$(xrandr -q | grep Screen | awk '{ print $8 }') 
+
+panelh=24
+panelw=$screenw
+#xoff=$((screenw /2 - panelw /2))
+xoff=0
+
+if [ $# -ne 1 ]; then
+    hicol=#e6e1dc
+else
+    hicol=$1
+fi
+
+bspc config top_padding $panelh
+
+echo "" | lemonbar -p -g $((panelw))x$((panelh))+$((xoff))+0 -B "$hicol" &
+
+sleep 1s
+
+statusline | lemonbar -g $((panelw))x$((panelh -4))+$((xoff))+0 -B "#2b2b2b" -F "#e6e1dc" -f "Terminus:pixelsize=12" -f "Unifont:pizelsize:12" -U "$hicol" -u "0" -o -3

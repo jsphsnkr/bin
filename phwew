@@ -1,0 +1,18 @@
+#! /bin/bash
+
+while IFS=: read ev wid; do
+    case $ev in
+        # window creation: center window unless dock, menu, etc.
+        16) wattr o $wid || cntr $wid;;
+
+        # mapping requests: set a special border for docks, meus and similar
+        # focus other windows
+        19) wattr o $wid || fcs $wid;;
+
+        # when a window gets deleted focus another
+        18) wattr $(pfw) || fcs next 2>/dev/null;;
+
+        # focus windows when the mouse enters them
+        #7) wattr o $wid || fcs $wid ;;
+    esac
+done
