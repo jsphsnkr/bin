@@ -1,0 +1,24 @@
+#! /bin/bash
+
+# duration
+dur=3
+
+# geometry
+bx=20
+by=20
+bw=200
+bh=40
+
+# colours
+bg="#3b3228"
+fg="#d0c8c6"
+
+# font
+fnt="Terminus:pixelsize=12"
+
+# arrange as lemonbar arguments
+opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg} -f ${fnt}"
+
+# create the popup
+(echo "%{c}$@"; sleep ${dur}) | lemonbar -d ${opt} 
+

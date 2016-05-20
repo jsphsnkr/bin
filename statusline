@@ -46,10 +46,10 @@ todo() {
 # Fill a buffer with status elements, then output it to stdout.
 while :; do
     buf="%{l}   "
-    buf="${buf}$(groups)"
+    buf="${buf}$(clock)"
     buf="${buf}%{c}$(battery)"
-    buf="${buf}%{c}$(todo)"
-    buf="${buf}%{r}$(clock)"
+    #buf="${buf}%{c}$(todo)"
+    buf="${buf}%{r}$(groups)"
     echo "%{+u}${buf}   " 
     sleep 1
 done
