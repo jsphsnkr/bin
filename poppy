@@ -10,11 +10,11 @@ bw=200
 bh=40
 
 # colours
-bg="#3b3228"
-fg="#d0c8c6"
+bg="#a7a7a7"
+fg="#1e1e1e"
 
 # font
-fnt="Terminus:pixelsize=12"
+fnt="-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
 
 # arrange as lemonbar arguments
 opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg} -f ${fnt}"
