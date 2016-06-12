@@ -1,0 +1,68 @@
+#! /usr/bin/env python
+
+import sys
+import scipy.io.wavfile as wv
+import numpy as np
+import os
+
+convert_16_bit = float(2**15)
+
+wav = wv.read(str(sys.argv[1]))
+#wav = wv.read('/home/spinks/Dropbox/PhD/nonsense-01.wav')
+
+y = wav[1][:] / (convert_16_bit + 1.0)
+
+fs = float(wav[0])
+
+t = len(y)/fs
+
+w = int(sys.argv[2]) # columns
+h = int(sys.argv[3]) # rows
+
+#w=34
+#h=11
+
+n = len(y) # n samples
+dx = n/w # x step size (nbins to average over)
+dxr = np.array(range(dx))
+op = np.empty([w])
+for i in range(w):
+    xr = (i*dx) + dxr
+    yv = np.max(y[xr])
+    op[i] = yv
+
+mx = max(op)
+mn = min(op)
+
+op = ((op / max(abs(op))) + 1) * h/2
+opi = op.astype('int')
+
+pop = np.chararray([h, w])
+
+for i in range(h):
+    for j in range(w):
+        if opi[j] == i:
+            pop[i, j] = 'x'
+        else:
+            if i == int(h/2):
+                pop[i, j] = '-'
+            else:
+                pop[i, j] = ' '
+for i in range(h):
+    for j in range(w):
+        if i <= (h/2) and i > 0:
+            if pop[i-1, j] == 'x':
+                pop[i, j] = 'x'
+for i in range(h)[::-1]:
+    for j in range(w):
+        if i >= (h/2) and i < (h-1):
+            if pop[i+1, j] == 'x':
+                pop[i, j] = 'x'
+
+oop = pop.tolist()
+
+for line in oop:
+    print '[%s]' % ', '.join(map(str, line)).replace(',', '')
+
+print(str(t) + 's // min:' + str(mn) + ' // max:' + str(mx))
+

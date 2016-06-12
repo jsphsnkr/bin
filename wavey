@@ -1,0 +1,28 @@
+#! /usr/bin/env python
+
+import sys
+import subprocess
+import scipy.io.wavfile as wv
+import numpy as np
+
+convert_16_bit = float(2**15)
+
+wav = wv.read(str(sys.argv[1]))
+print wav
+#wav[1][:] = wav[1][:] / (convert_16_bit + 1.0)
+
+fs =  float(wav[0])
+
+x = range(len(wav[1][:]))
+x = [el / fs for el in x]
+y = wav[1][:]
+print y
+print wav
+gplt = subprocess.Popen(["/usr/bin/gnuplot"],
+                        stdin=subprocess.PIPE)
+gplt.stdin.write("set term dumb 79 25\n")
+gplt.stdin.write("plot '-' using 1:2 title 'Line1' with linespoints \n")
+for i,j in zip(x,y):
+        gplt.stdin.write("%f %f\n" % (i,j))
+gplt.stdin.write("e\n")
+gplt.stdin.flush()

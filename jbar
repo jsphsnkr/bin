@@ -1,11 +1,12 @@
 #! /bin/bash
 
 screenw=$(xrandr -q | grep Screen | awk '{ print $8 }') 
+screenh=$(xrandr -q | grep Screen | awk '{ print $10 }' | cut -d ',' -f1)
 
-panelh=40
-panelw=200
-#xoff=$((screenw /2 - panelw /2))
-xoff=20
+panelh=16
+panelw=$screenw
+xoff=$((screenw /2 - panelw /2))
+#xoff=20
 
 if [ $# -ne 1 ]; then
     hicol=#cb6077
@@ -15,8 +16,8 @@ fi
 
 #bspc config top_padding $panelh
 
-echo "" | lemonbar -p -g $((panelw))x$((panelh))+$((xoff))+$((xoff)) -B "$hicol" &
+#echo "" | lemonbar -p -g $((panelw))x$((panelh))+$((xoff))+0 -B "$hicol" &
 
 sleep 1s
 
-statusline | lemonbar -g $((panelw))x$((panelh -10))+$((xoff))+$((xoff)) -B "#3b3228" -F "#d0c8c6" -f "Terminus:pixelsize=12" -f "Unifont:pizelsize:12" -U "$hicol" -u "0" -o -0
+statusline | lemonbar -d -g $((panelw))x$((panelh))+$((xoff))+0 -B "#000000" -F "#ffffff" -f "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"

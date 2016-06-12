@@ -27,9 +27,9 @@ groups() {
     cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
     tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
 
-    for w in `seq 0 $((cur - 1))`; do line="${line}- "; done
-    line="${line}+ "
-    for w in `seq $((cur + 2)) $tot`; do line="${line}- "; done
+    for w in `seq 0 $((cur - 1))`; do line="${line}O "; done
+    line="${line}# "
+    for w in `seq $((cur + 2)) $tot`; do line="${line}O "; done
     echo $line
 }
 
@@ -46,10 +46,10 @@ todo() {
 # Fill a buffer with status elements, then output it to stdout.
 while :; do
     buf="%{l}   "
-    buf="${buf}$(clock)"
+    buf="${buf}$(groups)"
     buf="${buf}%{c}$(battery)"
     #buf="${buf}%{c}$(todo)"
-    buf="${buf}%{r}$(groups)"
-    echo "%{+u}${buf}   " 
+    buf="${buf}%{r}$(clock)"
+    echo "${buf}   " 
     sleep 1
 done
