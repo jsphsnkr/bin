@@ -1,0 +1,64 @@
+#! /bin/bash
+#
+# szyslak, a simple bartender 
+#
+
+bgc="#cccccc"
+fgc="#1b1918"
+fnt="Dejavu Sans Mono:size=9:antialias=true:hinting=true"
+
+screenw=$(xrandr -q | grep Screen | awk '{ print $8 }')
+screenh=$(xrandr -q | grep Screen | awk '{ print $10 }' | cut -d ',' -f1)
+
+panelh=20
+panelw=$screenw
+xoff=$((screenw /2 - panelw /2))
+yoff=0
+
+clock() {
+    date '+%a %H:%M'
+}
+
+battery() {
+    bat=$(sed 's/%//' /sys/class/power_supply/BAT1/capacity)
+    lvl=10
+    if [ $bat -lt $lvl ]
+    then
+        echo "BATTERY LOW!"
+    fi
+}
+
+volume() {
+    vol=$(amixer -M get Master | awk -F"[][]" '/dB/ { print $2 }')
+    echo "vol:$vol"
+}
+
+groups() {
+    cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
+    tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
+
+    #grps=( 一 二 三 四 五 )
+    #grps=( I II III IV V )
+    #echo ${grps[$cur]}
+
+    for w in `seq 0 $((cur - 1))`; do line="${line}▽ "; done
+    line="${line}▼ "
+    for w in `seq $((cur + 2)) $tot`; do line="${line}▽ "; done
+    echo $line
+}
+
+wname() {
+    xtitle
+}
+
+# Fill buffer, then pipe to bar
+while :; do
+    buf="%{l}   "
+    buf="${buf}$(groups)"
+    buf="${buf}%{c}"
+    buf="${buf}$(battery)"
+    buf="${buf}%{r}"
+    buf="${buf}$(clock)"
+    echo "${buf}   " 
+    sleep 1
+done | lemonbar -d -g ${panelw}x${panelh}+${xoff}+${yoff} -B $bgc -F $fgc -f "$fnt"
