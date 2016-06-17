@@ -4,21 +4,23 @@
 dur=3
 
 # geometry
-bx=20
-by=20
-bw=200
-bh=40
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=$sw
+bh=20
+bx=0
+by=$((sh - bh))
 
 # colours
-bg="#a7a7a7"
-fg="#1e1e1e"
+bg="#cccccc"
+fg="#1b1918"
 
 # font
-fnt="-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
+fnt="xft:Dejavu Sans Mono:size=9:antialias=true:hinting=true"
 
 # arrange as lemonbar arguments
-opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg} -f ${fnt}"
+opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg}"
 
 # create the popup
-(echo "%{c}$@"; sleep ${dur}) | lemonbar -d ${opt} 
+(echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f "$fnt" 
 

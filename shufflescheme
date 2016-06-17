@@ -1,9 +1,0 @@
-#! /bin/bash
-
-feh --random --bg-scale ~/Pictures/wallpaper/* 
-wallpaper=$(cat "/home/spinks/.fehbg" | cut -d \' -f2)
-hicol=$(colourgen.py $wallpaper 1)
-bspc config focused_border_color    "$hicol"
-
-pkill lemonbar
-jbar $hicol &

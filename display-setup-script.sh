@@ -1,1 +1,0 @@
-bash ~/.mon_check
