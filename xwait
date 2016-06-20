@@ -1,0 +1,5 @@
+#! /bin/sh
+#
+# xwait - hold an X session until it is explicitely killed
+
+while :; do sleep 10; done

@@ -2,9 +2,9 @@
 
 DGAP=20
 
-echo "" | lemonbar -p -d -g 80x40+$((DGAP))+$((DGAP)) -B "#cf4c66" &
+#echo "" | lemonbar -p -d -g 80x40+$((DGAP))+$((DGAP)) -B "#cf4c66" &
 
 while true; do
-    echo "%{c}$(clock)"
+    echo "%{c}$(date '+%a %H:%M')"
     sleep 1
-done | lemonbar -d -g 72x32+$((DGAP + 4))+$((DGAP + 4)) -B "#e8e8ea" -F "#525252" -f "Terminus:pixelsize=12"
+done | lemonbar -d -g 72x32+$((DGAP + 4))+$((DGAP + 4)) -B "#e8e8ea" -F "#525252" -f "Dejavu Sans Mono:size=9:antialias=true:hinting=true"

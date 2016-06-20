@@ -30,7 +30,7 @@ battery() {
 
 volume() {
     vol=$(amixer -M get Master | awk -F"[][]" '/dB/ { print $2 }')
-    echo "vol:$vol"
+    echo "$vol"
 }
 
 groups() {
@@ -41,9 +41,9 @@ groups() {
     #grps=( I II III IV V )
     #echo ${grps[$cur]}
 
-    for w in `seq 0 $((cur - 1))`; do line="${line}▽ "; done
-    line="${line}▼ "
-    for w in `seq $((cur + 2)) $tot`; do line="${line}▽ "; done
+    for w in `seq 0 $((cur - 1))`; do line="${line}0 "; done
+    line="${line}X "
+    for w in `seq $((cur + 2)) $tot`; do line="${line}0 "; done
     echo $line
 }
 
@@ -54,11 +54,19 @@ wname() {
 # Fill buffer, then pipe to bar
 while :; do
     buf="%{l}   "
-    buf="${buf}$(groups)"
+    #buf="${buf}$(groups)"
     buf="${buf}%{c}"
     buf="${buf}$(battery)"
     buf="${buf}%{r}"
+    #buf="${buf}$(volume)   "
     buf="${buf}$(clock)"
     echo "${buf}   " 
     sleep 1
-done | lemonbar -d -g ${panelw}x${panelh}+${xoff}+${yoff} -B $bgc -F $fgc -f "$fnt"
+done | lemonbar -d -g ${panelw}x${panelh}+${xoff}+${yoff} -B $bgc -F $fgc -f "$fnt" 
+
+# this is DWM, son!
+#while :; do
+#    buf="$(battery)   $(clock)"
+#    xsetroot -name "$buf"
+#    sleep 30s
+#done

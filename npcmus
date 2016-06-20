@@ -11,7 +11,7 @@ nowplaying() {
     fi
 )"
 
-echo $SONG
+poppy $SONG
 
 }
 
