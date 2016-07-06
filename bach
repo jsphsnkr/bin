@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. grabcolours.sh
+
 nowplaying() {
     SONG="$(
     if ps -C cmus > /dev/null; then
@@ -24,14 +26,9 @@ bh=20
 bx=20
 by=20
 
-bg="#e8e8ea"
-fg="#545855"
-
-fnt="-*-terminus-*-*-*-*-12-*-*-*-*-*-*-*"
-
-opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg}"
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
 while :; do
     echo "   $(nowplaying) %{r}$prv $ply $nxt  " 
     sleep 1
-done | lemonbar -d -p $opt -f "$fnt" | sh 
+done | lemonbar -d -p $opt -f ${fnt} | sh 
