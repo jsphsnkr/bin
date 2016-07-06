@@ -1,0 +1,23 @@
+#!/bin/sh
+# 
+
+state() {
+    cmus-remote -Q 2>/dev/null | grep status | cut -d ' ' -f 2-
+}
+
+artist() {
+    cmus-remote -Q 2>/dev/null | grep "tag artist"| cut -d ' ' -f 3-
+}
+ 
+title(){
+    cmus-remote -Q 2>/dev/null | grep title | cut -d ' ' -f 3-
+}
+
+test $# -eq 0 && echo "`artist` - `title`" && exit 0
+
+case $1 in
+    +) cmus-remote -n ;;
+    -) cmus-remote -r ;;
+    =) cmus-remote -u ;;
+    state|artist|title) $1 ;;
+esac

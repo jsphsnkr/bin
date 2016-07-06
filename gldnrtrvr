@@ -65,14 +65,13 @@ print-packages()
 
 print-wm()
 {
- # for wm in ${wms[@]}; do          # pgrep through wmname array
- #   pid=$(pgrep -x -u $USER $wm) # if found, this wmname has running process
- #   if [[ "$pid" ]]; then
- #     color-echo 'WM' "wmutils"
- #     break
- #   fi
- # done
- color-echo "WM" "wmutils"
+  for wm in ${wms[@]}; do          # pgrep through wmname array
+    pid=$(pgrep -x -u $USER $wm) # if found, this wmname has running process
+    if [[ "$pid" ]]; then
+      color-echo 'WM' "$wm"
+      break
+    fi
+  done
 }
 
 print-distro()

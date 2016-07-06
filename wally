@@ -1,0 +1,7 @@
+#!/bin/sh
+
+geom='-g 250x175+550+293'
+params="-R .01 --zoom fill"
+wall=$(cat dotfiles/wmutilsstart | grep feh | cut -d ' ' -f3)
+
+feh $geom $params $wall

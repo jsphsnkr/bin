@@ -1,5 +1,7 @@
 #! /bin/bash
 
+. grabcolours.sh
+
 # duration
 dur=3
 
@@ -9,18 +11,11 @@ sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 bw=$sw
 bh=20
 bx=0
-by=$((sh - bh))
-
-# colours
-bg="#cccccc"
-fg="#1b1918"
-
-# font
-fnt="xft:Dejavu Sans Mono:size=9:antialias=true:hinting=true"
+by=0
 
 # arrange as lemonbar arguments
-opt="-g ${bw}x${bh}+${bx}+${by} -B ${bg} -F ${fg}"
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
 # create the popup
-(echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f "$fnt" 
+(echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f ${fnt}
 

@@ -3,29 +3,45 @@
 # szyslak, a simple bartender 
 #
 
-bgc="#cccccc"
-fgc="#1b1918"
-fnt="Dejavu Sans Mono:size=9:antialias=true:hinting=true"
-
-screenw=$(xrandr -q | grep Screen | awk '{ print $8 }')
-screenh=$(xrandr -q | grep Screen | awk '{ print $10 }' | cut -d ',' -f1)
-
-panelh=20
-panelw=$screenw
-xoff=$((screenw /2 - panelw /2))
-yoff=0
-
 clock() {
     date '+%a %H:%M'
 }
 
 battery() {
-    bat=$(sed 's/%//' /sys/class/power_supply/BAT1/capacity)
-    lvl=10
-    if [ $bat -lt $lvl ]
+    bat=$(cat /sys/class/power_supply/BAT1/capacity)
+    bats=$(cat /sys/class/power_supply/BAT1/status)
+    batbuf=""
+    if [ $bat -le 10 ] 
     then
-        echo "BATTERY LOW!"
+        batbuf="[    ]"
+    elif [ $bat -gt 10 ] && [ $bat -le 25 ] 
+    then
+        batbuf="[#   ]"
+    elif [ $bat -gt 25 ] && [ $bat -le 50 ] 
+    then
+        batbuf="[##  ]"
+    elif [ $bat -gt 50 ] && [ $bat -le 75 ] 
+    then
+        batbuf="[### "]
+    elif [ $bat -gt 75 ] && [ $bat -le 100 ] 
+    then
+        batbuf="[####]"
     fi
+    
+    if [ $bats == "Full" ] 
+    then
+        batbuf="=$batbuf="
+    elif [ $bats == "Discharging" ] 
+    then
+        batbuf="-$batbuf-"
+    elif [ $bats == "Charging" ] 
+    then
+        batbuf="+$batbuf+"
+    fi
+
+    echo "$batbuf"
+    
+
 }
 
 volume() {
@@ -51,22 +67,9 @@ wname() {
     xtitle
 }
 
-# Fill buffer, then pipe to bar
-while :; do
-    buf="%{l}   "
-    #buf="${buf}$(groups)"
-    buf="${buf}%{c}"
-    buf="${buf}$(battery)"
-    buf="${buf}%{r}"
-    #buf="${buf}$(volume)   "
-    buf="${buf}$(clock)"
-    echo "${buf}   " 
-    sleep 1
-done | lemonbar -d -g ${panelw}x${panelh}+${xoff}+${yoff} -B $bgc -F $fgc -f "$fnt" 
-
 # this is DWM, son!
-#while :; do
-#    buf="$(battery)   $(clock)"
-#    xsetroot -name "$buf"
-#    sleep 30s
-#done
+while :; do
+    buf="$(clock) // $(battery)"
+    xsetroot -name "$buf"
+    sleep 30s
+done

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+. grabcolours.sh
+
+dmenu_run -fn "${fnt}" -nb "#${bg}" -nf "#${fg}" -sb "#${fg}" -sf "#${bg}"
