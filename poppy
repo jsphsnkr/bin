@@ -17,5 +17,5 @@ by=0
 opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
 # create the popup
-(echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f ${fnt}
+(echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f $fnt
 

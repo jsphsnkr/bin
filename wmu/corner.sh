@@ -23,6 +23,8 @@ case $1 in
     mm) W=$((SW/2 - 2*BW))
         X=$((SW/2 - W/2 - BW))    
         H=$((SH - 2*pad - 2*BW));;
+    mx) W=$((SW - 2*pad - 2*BW))
+        H=$((SH - 2*pad - 2*BW));;
 esac
 
 wtp $X $Y $W $H $CUR

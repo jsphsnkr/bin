@@ -3,6 +3,11 @@
 # szyslak, a simple bartender 
 #
 
+. grabcolours.sh
+
+grpa="%{F#$fg}█# "
+grpi="%{F#$red}█# "
+
 clock() {
     date '+%a %H:%M'
 }
@@ -57,19 +62,31 @@ groups() {
     #grps=( I II III IV V )
     #echo ${grps[$cur]}
 
-    for w in `seq 0 $((cur - 1))`; do line="${line}0 "; done
-    line="${line}X "
-    for w in `seq $((cur + 2)) $tot`; do line="${line}0 "; done
+    for w in `seq 0 $((cur - 1))`; do line="${line}${grpi}"; done
+    line="${line}${grpa}"
+    for w in `seq $((cur + 2)) $tot`; do line="${line}${grpi}"; done
     echo $line
 }
 
-wname() {
-    xtitle
+nowplaying(){
+    murphy
 }
 
-# this is DWM, son!
+# geometry
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=100
+bh=20
+bx=$((sw/2 - bw/2))
+by=0
+
+# arrange lemonbar args
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
+
 while :; do
-    buf="$(clock) // $(battery)"
-    xsetroot -name "$buf"
-    sleep 30s
-done
+    buf=""
+    buf="${buf}%{c}"
+    buf="${buf}$(groups)"
+    echo ${buf}
+    sleep 1s
+done | lemonbar -d $opt -f $fnt

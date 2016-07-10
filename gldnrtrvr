@@ -12,7 +12,7 @@ rst="\e[0m"
 
 color-echo()
 {  # print with colors
-  echo -e " $ylw$1: $rst$2"
+  echo -e " $blu$1: $rst$2"
 }
 
 print-kernel()
@@ -59,7 +59,7 @@ print-packages()
 
 print-wm()
 {
-    color-echo 'WM' "wmutils"
+    color-echo 'WM' "bspwm"
 }
 
 print-distro()
@@ -74,10 +74,10 @@ print-distro()
 
 #echo -e "\n  $bprp$USER@$HOSTNAME$rst\n"
 echo
-echo -en "  ${red}██ ${rst}  >" && print-distro
-echo -en "  ${ylw} ██${rst}  >" && print-uptime
-echo -en "  ${grn}██ ${rst}  >" && print-shell
-echo -en "  ${cyn} ██${rst}  >" && print-wm 
-echo -en "  ${blu}██ ${rst}  >" && print-packages
-echo -en "  ${prp} ██${rst}  >" && print-kernel
+echo -en "  ${red}███${rst}  >" && print-distro
+echo -en "  ${red}███${rst}  >" && print-uptime
+echo -en "  ${grn}███${rst}  >" && print-shell
+echo -en "  ${grn}███${rst}  >" && print-wm 
+echo -en "  ${blu}███${rst}  >" && print-packages
+echo -en "  ${blu}███${rst}  >" && print-kernel
 echo

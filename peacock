@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# peacock - show off your feathers
+# jsphsnkr 2016
+
+. grabcolours.sh
+
+ered="\e[31m"
+egrn="\e[32m"
+eblu="\e[34m"
+erst="\e[0m"
+
+echo -e "\n"
+echo -e "\n"
+echo -en "          ${ered}█████████${egrn}█████████${eblu}█████████${erst}█████████ \n"
+echo -en "          ${ered}█████████${egrn}█████████${eblu}█████████${erst}█████████ \n"
+echo -en "          ${ered}█████████${egrn}█████████${eblu}█████████${erst}█████████ \n"
+echo -en "          ${ered}█████████${egrn}█████████${eblu}█████████${erst}█████████ \n"
+echo -en "  #${bg}  #${red}  #${grn}  #${blu}  #${fg} \n"
+echo -e "\n"

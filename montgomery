@@ -1,0 +1,63 @@
+#! /usr/bin/env python
+
+import Tkinter
+
+class app_tk(Tkinter.Tk):
+    def __init__(self, parent):
+        Tkinter.Tk.__init__(self, parent)
+        self.parent = parent
+        self.init()
+
+    def init(self):
+        self.grid()
+        
+        self.bg_label = Tkinter.Label(self, text="bg", anchor="e")
+        self.bg_label.grid(column=0, row=0)
+        self.fg_label = Tkinter.Label(self, text="fg", anchor="e")
+        self.fg_label.grid(column=0, row=1)
+        self.blk_label = Tkinter.Label(self, text="blk", anchor="e")
+        self.blk_label.grid(column=0, row=2)
+        self.bblk_label = Tkinter.Label(self, text="bblk", anchor="e")
+        self.bblk_label.grid(column=0, row=3)
+        self.red_label = Tkinter.Label(self, text="red", anchor="e")
+        self.red_label.grid(column=0, row=4)
+        self.grn_label = Tkinter.Label(self, text="grn", anchor="e")
+        self.grn_label.grid(column=0, row=5)
+        self.ylw_label = Tkinter.Label(self, text="ylw", anchor="e")
+        self.ylw_label.grid(column=0, row=6)
+        self.blu_label = Tkinter.Label(self, text="blu", anchor="e")
+        self.blu_label.grid(column=0, row=7)
+        self.mag_label = Tkinter.Label(self, text="mag", anchor="e")
+        self.mag_label.grid(column=0, row=8)
+        self.cyn_label = Tkinter.Label(self, text="cyn", anchor="e")
+        self.cyn_label.grid(column=0, row=9)
+        self.wht_label = Tkinter.Label(self, text="wht", anchor="e")
+        self.wht_label.grid(column=0, row=10)
+
+        self.bg_button = Tkinter.Button(self)
+        self.bg_button.grid(column=1, row=0)
+        self.fg_button = Tkinter.Button(self)
+        self.fg_button.grid(column=1, row=1)
+        self.blk_button = Tkinter.Button(self)
+        self.blk_button.grid(column=1, row=2)
+        self.bblk_button = Tkinter.Button(self)
+        self.bblk_button.grid(column=1, row=3)
+        self.red_button = Tkinter.Button(self)
+        self.red_button.grid(column=1, row=4)
+        self.grn_button = Tkinter.Button(self)
+        self.grn_button.grid(column=1, row=5)
+        self.ylw_button = Tkinter.Button(self)
+        self.ylw_button.grid(column=1, row=6)
+        self.blu_button = Tkinter.Button(self)
+        self.blu_button.grid(column=1, row=7)
+        self.mag_button = Tkinter.Button(self)
+        self.mag_button.grid(column=1, row=8)
+        self.cyn_button = Tkinter.Button(self)
+        self.cyn_button.grid(column=1, row=9)
+        self.wht_button = Tkinter.Button(self)
+        self.wht_button.grid(column=1, row=10)
+
+if __name__ == "__main__":
+    app = app_tk(None)
+    app.title('Montgomery')
+    app.mainloop()

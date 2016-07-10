@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# killx - kill x server & wmutils daemons
+#
+
+killall -q sxhkd
+killall -q wew
+killall -q xwait

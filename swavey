@@ -8,7 +8,6 @@ import os
 convert_16_bit = float(2**15)
 
 wav = wv.read(str(sys.argv[1]))
-#wav = wv.read('/home/spinks/Dropbox/PhD/nonsense-01.wav')
 
 y = wav[1][:] / (convert_16_bit + 1.0)
 
