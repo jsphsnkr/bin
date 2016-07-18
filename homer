@@ -1,6 +1,12 @@
 #! /bin/bash
+#
+# homer - managing power levels in sector 7G
+#
 
-bat=$(sed 's/%//' /sys/class/power_supply/BAT1/capacity)
 lvl=10
 
-test ${bat} -le ${lvl} && poppy Battery low!
+while :; do
+    bat=$(cat /sys/class/power_supply/BAT1/capacity)
+    test ${bat} -le ${lvl} && poppy Battery low!
+    sleep 30s
+done

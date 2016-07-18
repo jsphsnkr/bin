@@ -2,4 +2,4 @@
 
 . grabcolours.sh
 
-dmenu_run -fn "${fnt}" -nb "#${bg}" -nf "#${fg}" -sb "#${fg}" -sf "#${bg}"
+dmenu_run -b -fn "${fnt}" -nb "#${bg}" -nf "#${fg}" -sb "#${fg}" -sf "#${bg}"
