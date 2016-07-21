@@ -7,7 +7,7 @@
 wew | while IFS=: read ev wid; do
     case $ev in
         # window creation: center if not dock etc
-        16) wattr o $wid || corner.sh md $wid ;;
+        16) wattr o $wid || nyntyl.sh th mm $wid ;;
         # occurs on mapping requests
         19) wattr o $wid || focus.sh $wid ;;
         # when a window is deleted focus another

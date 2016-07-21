@@ -81,11 +81,9 @@ opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 while :; do
     buf=""
     buf="${buf}%{l}"
-    buf="${buf}$(groups)"
-    buf="${buf}%{c}"
     buf="${buf}%{B#$red} $(clock) %{B#$bg}"
     buf="${buf}%{r}"
     buf="${buf}%{B#$red} $(battery) %{B#$bg}"
     echo "${buf}"
-    sleep 1s
+    sleep 30s
 done | lemonbar -d $opt -f $fnt 
