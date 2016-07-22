@@ -70,20 +70,18 @@ nowplaying(){
 # geometry
 sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-bw=$sw
+bw=85
 bh=20
-bx=0
-by=0
+bx=$((sw - bw))
+by=$((sh - bh))
 
 # arrange lemonbar args
 opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
 while :; do
     buf=""
-    buf="${buf}%{l}"
-    buf="${buf}%{B#$red} $(clock) %{B#$bg}"
-    buf="${buf}%{r}"
-    buf="${buf}%{B#$red} $(battery) %{B#$bg}"
+    buf="${buf}%{c}"
+    buf="${buf}$(clock)"
     echo "${buf}"
     sleep 30s
 done | lemonbar -d $opt -f $fnt 
