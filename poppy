@@ -16,6 +16,8 @@ by=0
 # arrange as lemonbar arguments
 opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
+#fnt="terminus:size=9"
+
 # create the popup
 (echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f $fnt
 

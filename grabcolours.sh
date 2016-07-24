@@ -24,7 +24,12 @@ colors() {
   }
 
 fonts() {
-    fnt=$(xrdb -query | grep "*.font" | awk '{$1="";print}'|cut -d ',' -f1)
+    fnt=$(xrdb -query | grep "*.font" | cut -d ':' -f 3-)
+    if [ -z "$fnt" ] 
+        then
+            fnt=$(xrdb -query | grep "*.font" | cut -d ':' -f2)
+           # fnt="${var//[[:space:]]/}"
+    fi
 }
 
 fonts

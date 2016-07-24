@@ -6,8 +6,8 @@
 . grabcolours.sh
 
 BW=${BW:-4}                    # border width
-ACTIVE=${ACTIVE:-0x$fg}     # active border color
-INACTIVE=${INACTIVE:-0x$blu} # inactive border color
+ACTIVE=${ACTIVE:-0x$blu}     # active border color
+INACTIVE=${INACTIVE:-0x$fg} # inactive border color
 
 # get current window id
 CUR=$(pfw)
@@ -33,8 +33,8 @@ setborder() {
 }
 
 case $1 in
-    next) wid=$(lsw|grep -v $CUR|sed '1 p;d') ;;
-    prev) wid=$(lsw|grep -v $CUR|sed '$ p;d') ;;
+    next) wid=$(lsw|grep -v ${CUR:-" "}|sed '1 p;d') ;;
+    prev) wid=$(lsw|grep -v ${CUR:-" "}|sed '$ p;d') ;;
     0x*) wattr $1 && wid=$1 ;;
     *) usage ;;
 esac

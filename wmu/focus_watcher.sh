@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 # z3bra - 2014 (c) wtfpl
 # focus a window when it is created
@@ -11,8 +11,9 @@ wew | while IFS=: read ev wid; do
         # occurs on mapping requests
         19) wattr o $wid || focus.sh $wid ;;
         # when a window is deleted focus another
-        18) wattr $(pfw) || focus.sh prev 2>/dev/null;;
-        # focus window on mouse entry
-        #7) wattr o $wid || focus.sh $wid ;;
+        18) wattr $(pfw) || focus.sh prev 2>/dev/null ;;
+        #18) focus.sh $(lsw | tail -n1) ;;
+	# focus window on mouse entry
+        7) wattr o $wid || focus.sh $wid ;;
     esac
 done
