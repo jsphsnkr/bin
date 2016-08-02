@@ -1,9 +1,7 @@
 #!/bin/sh
 #
-# szyslak, a simple bartender 
+# statusline generator for dwm
 #
-
-. grabcolours.sh
 
 clock() {
     date '+%a %H:%M'
@@ -53,40 +51,15 @@ volume() {
     echo "$vol"
 }
 
-groups() {
-    cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
-    tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
-
-    for w in `seq 0 $((cur - 1))`; do line="${line}%{B#$bg} # "; done
-    line="${line}%{B#$fg}%{F#$bg} #  %{B#$bg}%{F#$fg}"
-    for w in `seq $((cur + 1)) $tot`; do line="${line}%{B#$bg} # "; done
-    echo $line
-}
 
 nowplaying(){
     murphy
 }
 
 
-# geometry
-sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
-sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-bw=$sw
-bh=14
-bx=0
-by=$((sh - bh))
-
-# arrange lemonbar args
-opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
 while :; do
-    buf=""
-    buf="${buf}%{l}"
-    buf="${buf} $(battery) "
-    buf="${buf}%{c}"
-	buf="${buf}$(nowplaying)"
-    buf="${buf}%{r}"
-    buf="${buf} $(clock) "
-    echo "${buf}"
+	buf=" $(nowplaying) | $(battery) | $(clock) "
+    xsetroot -name "${buf}"
     sleep 2s
-done | lemonbar -d $opt -f $fnt 
+done

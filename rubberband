@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
-cd ~/Pictures/screenshots
+file=$HOME/img/scrot/scrot.png
 
-scrot
+scrot -d 1 ${file} && poppy saved to ${file}

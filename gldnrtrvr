@@ -59,7 +59,7 @@ print-packages()
 
 print-wm()
 {
-    color-echo 'WM' "bspwm"
+    color-echo 'WM' "2bwm"
 }
 
 print-distro()
@@ -75,9 +75,6 @@ print-distro()
 #echo -e "\n  $bprp$USER@$HOSTNAME$rst\n"
 echo
 echo -en "  ${red}███${rst}  >" && print-distro
-echo -en "  ${red}███${rst}  >" && print-uptime
 echo -en "  ${grn}███${rst}  >" && print-shell
-echo -en "  ${grn}███${rst}  >" && print-wm 
-echo -en "  ${blu}███${rst}  >" && print-packages
 echo -en "  ${blu}███${rst}  >" && print-kernel
 echo

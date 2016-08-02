@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 . grabcolours.sh
 
-fnt="terminus:size=9"
+fnt="terminus:size=8"
 
-dmenu_run -fn $fnt -nb "#$bg" -nf "#$fg" -sb "#$fg" -sf "#$bg"
+dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$fg" -sb "#$fg" -sf "#$bg"

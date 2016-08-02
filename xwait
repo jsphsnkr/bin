@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 #
 # xwait - hold an X session until it is explicitely killed
 

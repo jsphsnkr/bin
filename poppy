@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 
 . grabcolours.sh
 
@@ -8,16 +8,13 @@ dur=3
 # geometry
 sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-bw=$sw
-bh=20
-bx=0
-by=0
+bw=$((sw - 200))
+bh=14
+bx=$((sw/2 - bw/2))
+by=$((sh - bh))
 
 # arrange as lemonbar arguments
 opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
-#fnt="terminus:size=9"
-
 # create the popup
 (echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f $fnt
-

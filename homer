@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 #
 # homer - managing power levels in sector 7G
 #

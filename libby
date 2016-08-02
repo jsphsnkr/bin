@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/sh
 #
 # volume management (ALSA Master channel)
 # thanks, z3bra!
