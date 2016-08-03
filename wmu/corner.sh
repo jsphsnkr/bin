@@ -20,7 +20,7 @@ case $1 in
         Y=$((SH - H - pad - 2*BW)) ;;
     md) X=$((SW/2 - W/2 - BW))
         Y=$((SH/2 - H/2 - BW)) ;;
-    mm) W=$((SW/2 - 2*BW))
+    mm) W=$((SW/2 - pad - 2*BW))
         X=$((SW/2 - W/2 - BW))    
         H=$((SH - 2*pad - 2*BW));;
     mx) W=$((SW - 2*pad - 2*BW))
