@@ -8,13 +8,13 @@ dur=3
 # geometry
 sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-bw=$((sw - 200))
-bh=14
-bx=$((sw/2 - bw/2))
-by=$((sh - bh))
+bw=200
+bh=30
+bx=$((sw - bw - 20))
+by=$((sh - bh - 20))
 
 # arrange as lemonbar arguments
-opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}" -r 4 -R "#${blu}""
 
 # create the popup
 (echo "%{c}$@"; sleep ${dur}) | lemonbar -d $opt -f $fnt

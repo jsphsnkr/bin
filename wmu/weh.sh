@@ -9,7 +9,7 @@ wew | while IFS=: read ev wid; do
         # window creation
         16) 
 		if ! wattr o $wid; then
-			corner.sh md $wid
+			snaps.sh md $wid
 		fi
 		;;
 

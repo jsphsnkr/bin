@@ -9,7 +9,9 @@ SW=$(wattr w $ROOT)
 SH=$(wattr h $ROOT)
 BW=$(wattr b $CUR)
 
-SH=$((SH - 14))
+PH=20
+
+SH=$((SH - PH))
 
 dW=$((SW/3)) 
 dH=$((SH/3))
@@ -18,22 +20,22 @@ case $1 in
 
     th) # throw current window into slot
         X=0
-        Y=0
+        Y=$PH
         W=$((SW/3 - 2*BW))
         H=$((SH/3 - 2*BW))
         case $2 in
             tm) X=$((dW)) ;;
             tr) X=$((2*dW)) ;;
-            ml) Y=$((dH)) ;;
+            ml) Y=$((dH + PH)) ;;
             mm) X=$((dW))
-                Y=$((dH)) ;;
+                Y=$((dH + PH)) ;;
             mr) X=$((2*dW))
-                Y=$((dH));;
-            bl) Y=$((2*dH)) ;;
+                Y=$((dH + PH));;
+            bl) Y=$((2*dH + PH)) ;;
             bm) X=$((dW))
-                Y=$((2*dH));;
+                Y=$((2*dH + PH));;
             br) X=$((2*dW))
-                Y=$((2*dH)) ;;
+                Y=$((2*dH + PH)) ;;
         esac
     
         wtp $X $Y $W $H $CUR ;;

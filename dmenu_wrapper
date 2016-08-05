@@ -2,6 +2,6 @@
 
 . grabcolours.sh
 
-fnt="drift:size=8"
+fnt="terminus:size=8"
 
 dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$fg" -sb "#$fg" -sf "#$bg"
