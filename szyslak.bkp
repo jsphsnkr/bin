@@ -1,0 +1,92 @@
+#!/bin/sh
+#
+# szyslak, a simple bartender 
+#
+
+. grabcolours.sh
+
+clock() {
+    date '+%a %H:%M'
+}
+
+battery() {
+    bat=$(cat /sys/class/power_supply/BAT1/capacity)
+    bats=$(cat /sys/class/power_supply/BAT1/status)
+    batbuf=""
+    if [ $bat -le 10 ] 
+    then
+        batbuf="[    ]"
+    elif [ $bat -gt 10 ] && [ $bat -le 25 ] 
+    then
+        batbuf="[=   ]"
+    elif [ $bat -gt 25 ] && [ $bat -le 50 ] 
+    then
+        batbuf="[==  ]"
+    elif [ $bat -gt 50 ] && [ $bat -le 75 ] 
+    then
+        batbuf="[=== ]"
+    elif [ $bat -gt 75 ] && [ $bat -le 100 ] 
+    then
+        batbuf="[====]"
+    fi
+    
+	batbuf="$bat"
+
+    if [ $bats = "Full" ] 
+    then
+        batbuf="= $batbuf ="
+    elif [ $bats = "Discharging" ] 
+    then
+        batbuf="- $batbuf -"
+    elif [ $bats = "Charging" ] 
+    then
+        batbuf="+ $batbuf +"
+    fi
+
+    echo "$batbuf"
+    
+
+}
+
+volume() {
+    vol=$(amixer -M get Master | awk -F"[][]" '/dB/ { print $2 }')
+    echo "$vol"
+}
+
+groups() {
+    cur=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
+    tot=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
+
+    for w in `seq 0 $((cur - 1))`; do line="${line}%{B#$bg} # "; done
+    line="${line}%{B#$fg}%{F#$bg} #  %{B#$bg}%{F#$fg}"
+    for w in `seq $((cur + 1)) $tot`; do line="${line}%{B#$bg} # "; done
+    echo $line
+}
+
+nowplaying(){
+    murphy
+}
+
+
+# geometry
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=$sw
+bh=20
+bx=0
+by=0
+
+# arrange lemonbar args
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
+
+while :; do
+    buf=""
+    buf="${buf}%{l}"
+    buf="${buf} $(battery) "
+    buf="${buf}%{c}"
+	buf="${buf}$(nowplaying)"
+    buf="${buf}%{r}"
+    buf="${buf} $(clock) "
+    echo "${buf}"
+    sleep 2s
+done | lemonbar -d $opt -f $fnt 

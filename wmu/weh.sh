@@ -25,8 +25,7 @@ wew | while IFS=: read ev wid; do
 		if ! wattr $(pfw); then
 			focus.sh prev 2>/dev/null
 		fi
-		
 		;;
-        
+
     esac
 done

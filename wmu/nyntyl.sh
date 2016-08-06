@@ -1,20 +1,33 @@
 #!/bin/sh
 #
-# nyntyl.sh - manipulate current window using 3x3 grid structure
+# nyntyl.sh - manipulate window using 3x3 grid structure
 # 
 
+# get current window id if not passed as arg
 CUR=${3:-$(pfw)}
+
+# grab root id and dimensions
 ROOT=$(lsw -r)
 SW=$(wattr w $ROOT)
 SH=$(wattr h $ROOT)
+
+# grab border width
 BW=$(wattr b $CUR)
 
+# panel height
 PH=20
 
+# leave space for panel
 SH=$((SH - PH))
 
+# calculate cell width and height
 dW=$((SW/3)) 
 dH=$((SH/3))
+
+usage() {
+	echo "usage: \n\tthrow:  $(basename $0) <th> <tl|tm|tr|ml|mm|mr|bl|bm|br> \n\tresize: $(basename $0) <rs> <h|j|k|l>"
+	exit 1
+}
 
 case $1 in
 
@@ -51,4 +64,6 @@ case $1 in
             l) X=$((dW)) ;;
         esac
         wrs $X $Y $CUR ;;
+	
+	*) usage ;;
 esac
