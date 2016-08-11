@@ -65,10 +65,17 @@ while :; do
 done > "$FIFO_PATH" &
 
 # wm groups
-while :; do
-	echo "G$(grump.sh -p)"
-	sleep 1s
-done > "$FIFO_PATH" &
+#while :; do
+#	echo "G$(grump.sh -p)"
+#	sleep 1s
+#done > "$FIFO_PATH" &
+
+# 2bwm active ws
+#while :; do
+#	cur=$(xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}')
+#	echo "G$cur"
+#	sleep 1s
+#done > "$FIFO_PATH" &
 
 # parse and display fifo contents
 cat "$FIFO_PATH" | while read -r line; do
@@ -87,5 +94,5 @@ cat "$FIFO_PATH" | while read -r line; do
 			;;
 	esac
 
-	echo "%{l} $groups %{c}$music%{r}$battery   $clock "
+	echo "%{l} $battery%{c}$music%{r}$clock "
 done | lemonbar -d $opt -f $fnt

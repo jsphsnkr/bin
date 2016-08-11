@@ -1,65 +1,82 @@
 #!/bin/sh
 #
-# statusline generator for dwm
+# szyslak - simple bartender
+# inspired by tudurom's statusbar script, thanks!
 #
 
-clock() {
-    date '+%a %H:%M'
-}
+# create status fifo
+FIFO_PATH=/tmp/status.fifo
+test -e "$FIFO_PATH" && rm "$FIFO_PATH"
+mkfifo "$FIFO_PATH"
 
-battery() {
-    bat=$(cat /sys/class/power_supply/BAT1/capacity)
-    bats=$(cat /sys/class/power_supply/BAT1/status)
-    batbuf=""
-    if [ $bat -le 10 ] 
-    then
-        batbuf="[    ]"
-    elif [ $bat -gt 10 ] && [ $bat -le 25 ] 
-    then
-        batbuf="[=   ]"
-    elif [ $bat -gt 25 ] && [ $bat -le 50 ] 
-    then
-        batbuf="[==  ]"
-    elif [ $bat -gt 50 ] && [ $bat -le 75 ] 
-    then
-        batbuf="[=== ]"
-    elif [ $bat -gt 75 ] && [ $bat -le 100 ] 
-    then
-        batbuf="[====]"
-    fi
-    
-	batbuf="$bat"
+# get xresources colours
+. grabcolours.sh
 
-    if [ $bats = "Full" ] 
-    then
-        batbuf="= $batbuf ="
-    elif [ $bats = "Discharging" ] 
-    then
-        batbuf="- $batbuf -"
-    elif [ $bats = "Charging" ] 
-    then
-        batbuf="+ $batbuf +"
-    fi
+#
+# lemonbar options
+#
 
-    echo "$batbuf"
-    
+# geometry
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=$sw
+bh=20
+bx=0
+by=0
 
-}
+# arrange lemonbar args
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 
-volume() {
-    vol=$(amixer -M get Master | awk -F"[][]" '/dB/ { print $2 }')
-    echo "$vol"
-}
+#
+# get status elements
+#
 
-
-nowplaying(){
-    murphy
-}
-
-
-
+# clock
 while :; do
-	buf=" $(nowplaying) | $(battery) | $(clock) "
-    xsetroot -name "${buf}"
-    sleep 2s
-done
+	echo "C$(date '+%a %H:%M')"
+	sleep 30s
+done > "$FIFO_PATH" &
+
+# battery
+while :; do
+	lvl=$(cat /sys/class/power_supply/BAT1/capacity)
+	stat=$(cat /sys/class/power_supply/BAT1/status)
+
+	buf="$lvl"
+	if [ $stat = "Full" ]
+	then
+		buf="= $buf ="
+	elif [ $stat = "Discharging" ]
+	then
+		buf="- $buf -"
+	elif [ $stat = "Charging" ]
+	then
+		buf="+ $buf +"
+	fi
+
+	echo "B$buf"
+	sleep 30s
+done > "$FIFO_PATH" &
+
+# music
+while :; do
+	echo "M$(murphy)"
+	sleep 1s
+done > "$FIFO_PATH" &
+
+# parse and display fifo contents
+cat "$FIFO_PATH" | while read -r line; do
+	case $line in
+		C*)
+			clock="${line#?}"
+			;;
+		B*)
+			battery="${line#?}"
+			;;
+		M*)
+			music="${line#?}"
+			;;
+	esac
+
+	xsetroot -name "$music | $battery | $clock "
+done 

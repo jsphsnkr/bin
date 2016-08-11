@@ -37,18 +37,34 @@ case $1 in
         W=$((SW/3 - 2*BW))
         H=$((SH/3 - 2*BW))
         case $2 in
-            tm) X=$((dW)) ;;
-            tr) X=$((2*dW)) ;;
-            ml) Y=$((dH + PH)) ;;
-            mm) X=$((dW))
-                Y=$((dH + PH)) ;;
-            mr) X=$((2*dW))
-                Y=$((dH + PH));;
-            bl) Y=$((2*dH + PH)) ;;
-            bm) X=$((dW))
-                Y=$((2*dH + PH));;
-            br) X=$((2*dW))
-                Y=$((2*dH + PH)) ;;
+            tm) 
+				X=$((dW)) 
+				;;
+            tr) 
+				X=$((2*dW)) 
+				;;
+            ml) 
+				Y=$((dH + PH)) 
+				;;
+            mm) 
+				X=$((dW))
+                Y=$((dH + PH)) 
+				;;
+            mr) 
+				X=$((2*dW))
+                Y=$((dH + PH))
+				;;
+            bl) 
+				Y=$((2*dH + PH)) 
+				;;
+            bm) 
+				X=$((dW))
+                Y=$((2*dH + PH))
+				;;
+            br) 
+				X=$((2*dW))
+                Y=$((2*dH + PH)) 
+				;;
         esac
     
         wtp $X $Y $W $H $CUR ;;
@@ -56,13 +72,32 @@ case $1 in
     rs) # resize current window in slot steps
         X=0
         Y=0
-        
+        CW=$(wattr w $CUR)
+		CH=$(wattr h $CUR)
+
         case $2 in
-            h) X=$((-dW)) ;;
-            j) Y=$((dH)) ;;
-            k) Y=$((-dH)) ;;
-            l) X=$((dW)) ;;
+            h) 
+				if [ $CW -le $dW ] ; then
+					exit 0
+				else
+					X=$((-dW))
+				fi
+				;;
+            j) 
+				Y=$((dH)) 
+				;;
+            k)
+				if [ $CH -le $dH ] ; then
+					exit 0
+				else
+					Y=$((-dH)) 
+				fi
+				;;
+            l) 
+				X=$((dW)) 
+				;;
         esac
+
         wrs $X $Y $CUR ;;
 	
 	*) usage ;;

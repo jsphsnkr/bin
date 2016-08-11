@@ -13,7 +13,11 @@ title(){
     cmus-remote -Q 2>/dev/null | grep title | cut -d ' ' -f 3-
 }
 
-test $# -eq 0 && test `state` = "playing" && echo "`artist` - `title`" && exit 0
+if [ ! $(pgrep cmus) ]; then
+	exit 0
+fi
+
+test $# -eq 0 && echo "`artist` - `title`" && exit 0
 
 case $1 in
     +) cmus-remote -n ;;
