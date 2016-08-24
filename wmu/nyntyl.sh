@@ -15,7 +15,7 @@ SH=$(wattr h $ROOT)
 BW=$(wattr b $CUR)
 
 # panel height
-PH=20
+PH=16
 
 # leave space for panel
 SH=$((SH - PH))
@@ -31,7 +31,7 @@ usage() {
 
 case $1 in
 
-    th) # throw current window into slot
+    th) # throw current window into cell
         X=0
         Y=$PH
         W=$((SW/3 - 2*BW))
@@ -69,7 +69,7 @@ case $1 in
     
         wtp $X $Y $W $H $CUR ;;
 
-    rs) # resize current window in slot steps
+    rs) # resize current window in cell steps
         X=0
         Y=0
         CW=$(wattr w $CUR)

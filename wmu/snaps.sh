@@ -16,7 +16,7 @@ CX=$(wattr x $CUR)
 CY=$(wattr y $CUR)
 
 # panel height
-PH="20"
+PH="16"
 
 X=0
 Y=$PH

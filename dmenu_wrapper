@@ -2,14 +2,12 @@
 
 . grabcolours.sh
 
-fnt="drift:size=8"
-
 sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 
-w=$((sw - 400))
-h=20
+w=$sw
+h=16
 xoff=$((sw/2 - w/2))
 yoff=$((sh - h))
 
-dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$fg" -sb "#$fg" -sf "#$bg" -x $xoff -y $yoff -w $w -h $h
+dmenu_run -b -fn "$fnt" -nb "#$bg" -nf "#$blu" -sb "#$bg" -sf "#$fg" -x $xoff -y $yoff -w $w -h $h

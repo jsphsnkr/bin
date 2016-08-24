@@ -49,7 +49,7 @@ showgrp() {
 		wid=$(basename $file)
 		mapw -m $wid
 	done
-	echo 1 > "$GSTATROOT"/$1
+	echo + > "$GSTATROOT"/$1
 }
 
 # hide group
@@ -58,7 +58,7 @@ hidegrp() {
 		wid=$(basename $file)
 		mapw -u $wid
 	done
-	echo 0 > "$GSTATROOT"/$1
+	echo - > "$GSTATROOT"/$1
 }
 
 # toggle group
@@ -90,7 +90,7 @@ cgrps() {
 
 	for gstat in $(seq 1 $GNUM); do
 		if [ $(find "$GROOT"/$gstat -maxdepth 0 -type d -empty) ]; then
-			echo 0 > "$GSTATROOT"/$gstat
+			echo - > "$GSTATROOT"/$gstat
 		fi
 	done
 }

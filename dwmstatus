@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # szyslak - simple bartender
 # inspired by tudurom's statusbar script, thanks!
@@ -9,24 +9,6 @@ FIFO_PATH=/tmp/status.fifo
 test -e "$FIFO_PATH" && rm "$FIFO_PATH"
 mkfifo "$FIFO_PATH"
 
-# get xresources colours
-. grabcolours.sh
-
-#
-# lemonbar options
-#
-
-# geometry
-sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
-sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
-bw=$sw
-bh=20
-bx=0
-by=0
-
-# arrange lemonbar args
-opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
-
 #
 # get status elements
 #
@@ -34,6 +16,7 @@ opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
 # clock
 while :; do
 	echo "C$(date '+%a %H:%M')"
+	#echo "C$(brclock)"
 	sleep 30s
 done > "$FIFO_PATH" &
 
@@ -78,5 +61,5 @@ cat "$FIFO_PATH" | while read -r line; do
 			;;
 	esac
 
-	xsetroot -name "$music | $battery | $clock "
+	xsetroot -name " $music  $battery  $clock "
 done 
