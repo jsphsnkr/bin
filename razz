@@ -25,7 +25,7 @@ if [ "$stn" = "stop" ]; then
 elif [ -z "$stn"]; then
 	exit
 else
-	url=$(cat $stationlist | grep $stn | cut -d' ' -f2)
+	url=$(cat $stationlist | grep -w $stn | cut -d' ' -f2)
 	pkill mplayer
 	mplayer "$url"
 fi
