@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# smolbar - it's a smol bar
+#
+
+# create status fifo
+FIFO_PATH=/tmp/status.fifo
+test -e "$FIFO_PATH" && rm "$FIFO_PATH"
+mkfifo "$FIFO_PATH"
+
+# get xresources colours
+. grabcolours.sh
+
+#
+# lemonbar options
+#
+
+# geometry
+border=2
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=$((160 - 2*border))
+bh=$((40 - 2*border))
+bx=$((sw - bw - 10 - 2*border))
+by=$((sh - bh - 10 - 2*border))
+
+# arrange lemonbar args
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}" -r $border -R "#444444""
+
+#
+# get status elements
+#
+
+# clock
+while :; do
+	echo "C$(date '+%a %H:%M')"
+	sleep 30s
+done > "$FIFO_PATH" &
+
+# battery
+while :; do
+	lvl=$(cat /sys/class/power_supply/BAT1/capacity)
+	stat=$(cat /sys/class/power_supply/BAT1/status)
+
+	buf="$lvl"
+	if [ $stat = "Full" ]
+	then
+		buf="= $buf ="
+	elif [ $stat = "Discharging" ]
+	then
+		buf="- $buf -"
+	elif [ $stat = "Charging" ]
+	then
+		buf="+ $buf +"
+	fi
+
+	echo "B$buf"
+	sleep 30s
+done > "$FIFO_PATH" &
+
+# parse and display fifo contents
+cat "$FIFO_PATH" | while read -r line; do
+	case $line in
+		C*)
+			clock="${line#?}"
+			;;
+		B*)
+			battery="${line#?}"
+			;;
+	esac
+
+	echo "%{c} $battery  $clock "
+done | lemonbar -d $opt -f $fnt

@@ -3,9 +3,8 @@
 # z3bra - 2014 (c) wtfpl
 # arrange windows in a tiled pattern
 
-# default values for gaps and master area
-PANEL=${PANEL:-20}
-GAP=${GAP:-0}
+# source global vars
+. wmu.conf
 
 # get current window id and its borderwidth
 PFW=$(pfw)
@@ -17,7 +16,6 @@ SW=$(wattr w $ROOT)
 SH=$(wattr h $ROOT)
 
 # calc master size from screen size and input ratio (in %)
-#MASTER=${MASTER:-900}
 MASTER=$((SW / 100 *  $1))
 
 # get the number of windows to put in the stacking area
@@ -25,9 +23,9 @@ MAX=$(lsw|grep -v $PFW|wc -l)
 
 # calculate usable screen size (without borders and gaps)
 SW=$((SW - GAP - 2*BW))
-SH=$((SH - GAP - PANEL))
+SH=$((SH - GAP - PH))
 
-Y=$((0 + GAP + PANEL))
+Y=$((0 + GAP + PH))
 # put current window in master area
 wtp $GAP $Y $((MASTER - GAP - 2*BW)) $((SH - GAP - 2*BW)) $PFW
 

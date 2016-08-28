@@ -1,21 +1,21 @@
 #!/bin/sh
 #
 # nyntyl.sh - manipulate window using 3x3 grid structure
-# 
+# thanks to /u/wufyy for the refactoring advice
+
+# source global vars
+. wmu.conf
 
 # get current window id if not passed as arg
 CUR=${3:-$(pfw)}
 
-# grab root id and dimensions
-ROOT=$(lsw -r)
-SW=$(wattr w $ROOT)
-SH=$(wattr h $ROOT)
+# grab dimensions of root window
+read SW SH <<-eof
+	$(wattr wh $(lsw -r))
+eof
 
 # grab border width
 BW=$(wattr b $CUR)
-
-# panel height
-PH=16
 
 # leave space for panel
 SH=$((SH - PH))
@@ -25,56 +25,34 @@ dW=$((SW/3))
 dH=$((SH/3))
 
 usage() {
-	echo "usage: \n\tthrow:  $(basename $0) <th> <tl|tm|tr|ml|mm|mr|bl|bm|br> \n\tresize: $(basename $0) <rs> <h|j|k|l>"
+	echo "usage: \n\tthrow:  ${0##*/} <th> <tl|tm|tr|ml|mm|mr|bl|bm|br> \n\tresize: ${0##*/} <rs> <h|j|k|l>"
 	exit 1
 }
 
 case $1 in
 
     th) # throw current window into cell
-        X=0
-        Y=$PH
-        W=$((SW/3 - 2*BW))
-        H=$((SH/3 - 2*BW))
-        case $2 in
-            tm) 
-				X=$((dW)) 
-				;;
-            tr) 
-				X=$((2*dW)) 
-				;;
-            ml) 
-				Y=$((dH + PH)) 
-				;;
-            mm) 
-				X=$((dW))
-                Y=$((dH + PH)) 
-				;;
-            mr) 
-				X=$((2*dW))
-                Y=$((dH + PH))
-				;;
-            bl) 
-				Y=$((2*dH + PH)) 
-				;;
-            bm) 
-				X=$((dW))
-                Y=$((2*dH + PH))
-				;;
-            br) 
-				X=$((2*dW))
-                Y=$((2*dH + PH)) 
-				;;
-        esac
-    
+        X=$GAP
+		Y=$((PH + GAP))
+        W=$((SW/3 - 2*BW - 2*GAP))
+        H=$((SH/3 - 2*BW - 2*GAP))
+		case ${2#?} in
+			m) X=$((dW + GAP)) ;;
+			r) X=$((2*dW + GAP)) ;;
+		esac
+		case ${2%?} in
+			m) Y=$((dH + PH + GAP)) ;;
+			b) Y=$((2*dH + PH + GAP)) ;;
+		esac
+
         wtp $X $Y $W $H $CUR ;;
 
     rs) # resize current window in cell steps
         X=0
         Y=0
-        CW=$(wattr w $CUR)
-		CH=$(wattr h $CUR)
-
+		read CW CH <<-eof
+			$(wattr wh ${CUR})
+		eof
         case $2 in
             h) 
 				if [ $CW -le $dW ] ; then
