@@ -6,8 +6,8 @@ sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 
 w=$sw
-h=16
+h=20
 xoff=$((sw/2 - w/2))
-yoff=$((sh - h))
+yoff=0
 
-dmenu_run -b -fn "$fnt" -nb "#$bg" -nf "#$fg" -sb "#$bg" -sf "#$red" -x $xoff -y $yoff -w $w -h $h
+dmenu_run -fn "$fnt" -nb "#$bg" -nf "#$fg" -sb "#$bg" -sf "#$red" -x $xoff -y $yoff -w $w -h $h
