@@ -21,8 +21,8 @@ BW=$(wattr b $CUR)
 SH=$((SH - PH))
 
 # calculate cell width and height
-dW=$((SW/3)) 
-dH=$((SH/3))
+dW=$((SW/3 - GAP/3)) 
+dH=$((SH/3 - GAP/3))
 
 usage() {
 	echo "usage: \n\tthrow:  ${0##*/} <th> <tl|tm|tr|ml|mm|mr|bl|bm|br> \n\tresize: ${0##*/} <rs> <h|j|k|l>"
@@ -34,8 +34,8 @@ case $1 in
     th) # throw current window into cell
         X=$GAP
 		Y=$((PH + GAP))
-        W=$((SW/3 - 2*BW - 2*GAP))
-        H=$((SH/3 - 2*BW - 2*GAP))
+        W=$((SW/3 - 2*BW - 3*GAP/2))
+        H=$((SH/3 - 2*BW - 3*GAP/2))
 		case ${2#?} in
 			m) X=$((dW + GAP)) ;;
 			r) X=$((2*dW + GAP)) ;;

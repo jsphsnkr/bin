@@ -2,4 +2,6 @@
 
 file=$HOME/img/scrot/scrot.png
 
-scrot -d 1 ${file} && poppy saved to ${file}
+scrot -d 1 ${file}
+curl -s -F'file=@/home/lemons/img/scrot/scrot.png' https://0x0.st | xargs echo -n | xclip
+poppy saved to ${file}

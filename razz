@@ -11,9 +11,9 @@ stationlist="$HOME/radio"
 sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 
-w=$sw
+w=$((sw - 160))
 h=20
-xoff=$((sw/2 - w/2))
+xoff=0
 yoff=0
 
 dmenu_cmd="dmenu -fn $fnt -nb #$bg -nf #$fg -sb #$bg -sf #$red -x $xoff -y $yoff -w $w -h $h"
