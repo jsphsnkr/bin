@@ -6,7 +6,7 @@
 . grabcolours.sh
 
 BW=${BW:-2}                    # border width
-ACTIVE=${ACTIVE:-0x$red}     # active border color
+ACTIVE=${ACTIVE:-0x$fg}     # active border color
 INACTIVE=${INACTIVE:-0xcccccc} # inactive border color
 
 # get current window id

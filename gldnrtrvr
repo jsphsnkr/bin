@@ -17,49 +17,22 @@ color-echo()
 
 print-kernel()
 {
-  color-echo 'KN' "$(uname -smr)"
-}
-
-print-uptime()
-{
-  up=$(</proc/uptime)
-  up=${up//.*}                # string before first . is seconds
-  days=$((${up}/86400))       # seconds divided by 86400 is days
-  hours=$((${up}/3600%24))    # seconds divided by 3600 mod 24 is hours
-  mins=$((${up}/60%60))       # seconds divided by 60 mod 60 is mins
-  color-echo "UP" $days'd '$hours'h '$mins'm'
+  color-echo 'KN' "$(uname -r)"
 }
 
 print-shell() {
 color-echo 'SH' $SHELL
 }
 
-print-cpu()
-{
-  arm=$(grep ARM /proc/cpuinfo)    # ARM procinfo uses different format
-  if [[ "$arm" != "" ]]; then
-    cpu=$(grep -m1 -i 'Processor' /proc/cpuinfo)
-  else
-    cpu=$(grep -m1 -i 'model name' /proc/cpuinfo)
-  fi
-  color-echo 'CPU' "${cpu#*: }" # everything after colon is processor name
-}
-
-print-gpu()
-{
-  gpu=$(lspci | grep VGA | awk -F ': ' '{print $2}' | sed 's/(rev ..)//g')
-  color-echo 'GPU' "$gpu"
-}
-
 print-packages()
 {
-  packages=$(dpkg --get-selections | grep -v "deinstall" | wc -l)
+  packages=$(pacman -Qqs | wc -l)
   color-echo 'PK' "$packages"
 }
 
 print-wm()
 {
-    color-echo 'WM' "2bwm"
+    color-echo 'WM' "wmutils"
 }
 
 print-distro()
@@ -73,8 +46,12 @@ print-distro()
 }
 
 #echo -e "\n  $bprp$USER@$HOSTNAME$rst\n"
-echo
-echo -en "  ${red}███${rst}  >" && print-distro
-echo -en "  ${grn}███${rst}  >" && print-shell
-echo -en "  ${blu}███${rst}  >" && print-kernel
-echo
+echo -en "\n"
+echo -en "     " && print-distro
+echo -en "     " && print-kernel
+echo -en "     " && print-shell
+echo -en "     " && print-packages
+echo -en "     " && print-wm
+echo -en "\n"
+echo -en "          ${blu}███${red}███${grn}███" 
+echo -en "\n"
