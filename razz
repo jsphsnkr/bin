@@ -16,7 +16,7 @@ h=20
 xoff=0
 yoff=0
 
-dmenu_cmd="dmenu -fn $fnt -nb #$bg -nf #999999 -sb #$bg -sf #$fg -x $xoff -y $yoff -w $w -h $h"
+dmenu_cmd="dmenu -fn $fnt -nb #$bg -nf #$blu -sb #$bg -sf #$fg -x $xoff -y $yoff -w $w -h $h"
 
 stn=$(cat $stationlist | cut -d' ' -f1 | sort | $dmenu_cmd)
 
