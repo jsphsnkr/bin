@@ -1,8 +1,0 @@
-#!/bin/sh
-
-. $HOME/.wp
-
-geom='-g 250x175+550+293'
-params="-R .01 --zoom fill"
-
-feh $geom $params $wp

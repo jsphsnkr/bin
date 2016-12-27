@@ -1,8 +1,0 @@
-#!/bin/bash
-
-case $1 in
-    am) urxvt -e alsamixer ;;
-     v) urxvt -e vim ;;
-     c) urxvt -e cmus ;;
-     h) urxvt -e htop ;;
-esac
