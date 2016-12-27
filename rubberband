@@ -1,7 +1,13 @@
 #!/bin/sh
 
-file=$HOME/img/scrot/scrot.png
+file=$HOME/Pictures/scrot/$(date '+%y%m%d_%H%M').png
 
-scrot -d 1 ${file}
-curl -s -F'file=@/home/lemons/img/scrot/scrot.png' https://0x0.st | xargs echo -n | xclip
-poppy saved to ${file}
+scrot ${file}
+notify-send "scrot saved" &
+
+case $1 in
+	up) #upload to the null pointer
+		curl -s -F"file=@${file}" https://0x0.st | xargs echo -n | xclip 
+		notify-send "scrot uploaded"
+		;;
+esac

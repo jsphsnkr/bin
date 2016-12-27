@@ -1,13 +1,10 @@
 #!/bin/sh
 
-. grabcolours.sh
+#. grabcolours.sh
 
-sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
-sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bg="e8e8ea"
+nf="888888"
+sf="222222"
+fnt="hack:size=9:antialias=true:hinting=true"
 
-w=$((sw - 160))
-h=20
-xoff=0
-yoff=0
-
-dmenu_run -fn $fnt -nb "#$bg" -nf "#$blu" -sb "#$bg" -sf "#$fg" -x $xoff -y $yoff -w $w -h $h
+dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$nf" -sb "#$bg" -sf "#$sf" 
