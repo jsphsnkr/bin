@@ -1,10 +1,5 @@
 #!/bin/sh
 
-#. grabcolours.sh
+. $HOME/dotfiles/colourdefs
 
-bg="e8e8ea"
-nf="888888"
-sf="222222"
-fnt="hack:size=9:antialias=true:hinting=true"
-
-dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$nf" -sb "#$bg" -sf "#$sf" 
+dmenu_run -fn $fnt -nb $bg -nf $nf -sb $bg -sf $sf 

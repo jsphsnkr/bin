@@ -1,31 +1,26 @@
 #!/bin/sh
 #
-# razz - simple internet radio stream handler [ req. dmenu mplayer ]
+# razz - simple internet radio stream handler 
 #
 
-. grabcolours.sh
+plyr=mpv
 
 # where is the list of streams?
-stationlist="$HOME/radio"
+stationlist="$HOME/dotfiles/radio"
 
-sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
-sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+# load colour defs
+. $HOME/dotfiles/colourdefs
 
-w=$((sw - 160))
-h=20
-xoff=0
-yoff=0
-
-dmenu_cmd="dmenu -fn $fnt -nb #$bg -nf #$blu -sb #$bg -sf #$fg -x $xoff -y $yoff -w $w -h $h"
+dmenu_cmd="dmenu -fn $fnt -nb $bg -nf $nf -sb $bg -sf $sf"
 
 stn=$(cat $stationlist | cut -d' ' -f1 | sort | $dmenu_cmd)
 
 if [ "$stn" = "stop" ]; then
-	pkill mplayer
+	pkill $plyr
 elif [ -z "$stn"]; then
 	exit
 else
 	url=$(cat $stationlist | grep -w $stn | cut -d' ' -f2)
-	pkill mplayer
-	mplayer "$url"
+	pkill $plyr
+	$plyr "$url"
 fi
