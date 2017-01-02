@@ -1,26 +1,30 @@
 #!/bin/sh
 #
-# razz - simple internet radio stream handler 
+# razz - simple radio tuner 
 #
 
 plyr=mpv
 
+fcur=$HOME/.radio_cur
+
 # where is the list of streams?
-stationlist="$HOME/dotfiles/radio"
+stationlist=$HOME/dotfiles/radio
 
 # load colour defs
-. $HOME/dotfiles/colourdefs
+. grabcolours.sh
 
-dmenu_cmd="dmenu -fn $fnt -nb $bg -nf $nf -sb $bg -sf $sf"
+dmenu_cmd="dmenu -b -p $(cat $fcur) -fn $fnt -nb #$bg -nf #$lo -sb #$bg -sf #$fg"
 
 stn=$(cat $stationlist | cut -d' ' -f1 | sort | $dmenu_cmd)
 
 if [ "$stn" = "stop" ]; then
 	pkill $plyr
-elif [ -z "$stn"]; then
+	echo "none" > $fcur
+elif [ -z "$stn" ]; then
 	exit
 else
 	url=$(cat $stationlist | grep -w $stn | cut -d' ' -f2)
 	pkill $plyr
-	$plyr "$url"
+	$plyr "$url" &
+	echo "$stn" > $fcur
 fi

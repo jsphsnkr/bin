@@ -21,6 +21,9 @@ colors() {
     bmag=$(xrdb -query | grep "color13:" | cut -d '#' -f2)
     bcyn=$(xrdb -query | grep "color14:" | cut -d '#' -f2)
     bwht=$(xrdb -query | grep "color15:" | cut -d '#' -f2)
+	lo=$grn
+	md=$blu
+	hi=$red
   }
 
 fonts() {

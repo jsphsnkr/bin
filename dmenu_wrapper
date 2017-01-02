@@ -1,5 +1,5 @@
 #!/bin/sh
 
-. $HOME/dotfiles/colourdefs
+. grabcolours.sh
 
-dmenu_run -fn $fnt -nb $bg -nf $nf -sb $bg -sf $sf 
+dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$lo" -sb "#$bg" -sf "#$fg" 
