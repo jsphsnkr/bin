@@ -2,4 +2,4 @@
 
 . grabcolours.sh
 
-dmenu_run -b -fn $fnt -nb "#$bg" -nf "#$lo" -sb "#$bg" -sf "#$fg" 
+dmenu_run -p "$(date '+%a %d %b %H:%M')" -fn $fnt -nb "#$bg" -nf "#$lo" -sb "#$bg" -sf "#$fg" 

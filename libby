@@ -16,9 +16,9 @@ state() {
 test $# -eq 0 && echo "`level` `state`" && exit 0
 
 case $1 in
-    +)      amixer set Master 3dB+ >/dev/null ;;
-    -)      amixer set Master 3dB- >/dev/null ;;
-    !)      amixer set Master toggle >/dev/null ;;
+    +) amixer set Master 3dB+ >/dev/null ;;
+    -) amixer set Master 3dB- >/dev/null ;;
+    !) amixer set Master 0% >/dev/null ;;
     state|level) $1;;
     *)    amixer set Master $1 >/dev/null;;
 esac

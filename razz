@@ -13,7 +13,7 @@ stationlist=$HOME/dotfiles/radio
 # load colour defs
 . grabcolours.sh
 
-dmenu_cmd="dmenu -b -p $(cat $fcur) -fn $fnt -nb #$bg -nf #$lo -sb #$bg -sf #$fg"
+dmenu_cmd="dmenu -p $(cat $fcur) -fn $fnt -nb #$bg -nf #$lo -sb #$bg -sf #$fg"
 
 stn=$(cat $stationlist | cut -d' ' -f1 | sort | $dmenu_cmd)
 
