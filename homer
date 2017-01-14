@@ -7,6 +7,6 @@ lvl=10
 
 while :; do
     bat=$(cat /sys/class/power_supply/BAT1/capacity)
-    test ${bat} -le ${lvl} && poppy Battery low!
+    test ${bat} -le ${lvl} && notify-send "Battery low!"
     sleep 30s
 done

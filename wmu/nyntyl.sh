@@ -4,7 +4,7 @@
 # thanks to /u/wufyy for the refactoring advice
 
 # source global vars
-. wmu.conf
+. ~/bin/wmu/wmu.conf
 
 # get current window id if not passed as arg
 CUR=${3:-$(pfw)}
