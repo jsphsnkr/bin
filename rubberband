@@ -3,11 +3,11 @@
 file=$HOME/Pictures/scrot/$(date '+%y%m%d_%H%M').png
 
 scrot ${file}
-notify-send "scrot saved" &
+poppy "scrot saved" &
 
 case $1 in
 	up) #upload to the null pointer
 		curl -s -F"file=@${file}" https://0x0.st | xargs echo -n | xclip 
-		notify-send "scrot uploaded"
+		poppy "scrot uploaded"
 		;;
 esac

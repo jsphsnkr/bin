@@ -1,10 +1,5 @@
 #!/bin/sh
 
-#. grabcolours.sh
+. grabcolours.sh
 
-fnt="hack:size=9:antialias=true:hinting=true"
-bg="282828"
-fg="fbf1c7"
-lo="928374"
-
-dmenu_run -p $(date '+%H:%M') -fn $fnt -nb "#$bg" -nf "#$lo" -sb "#$bg" -sf "#$fg" 
+dmenu_run -p ">" -fn $fnt -nb "#$bg" -nf "#$lo" -sb "#$bg" -sf "#$fg" 

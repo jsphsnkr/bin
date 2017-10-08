@@ -11,12 +11,7 @@ fcur=$HOME/.radio_cur
 stationlist=$HOME/dotfiles/radio
 
 # load colour defs
-#. grabcolours.sh
-
-fnt="hack:size=9:antialias=true:hinting=true"
-bg="282828"
-fg="fbf1c7"
-lo="928374"
+. grabcolours.sh
 
 dmenu_cmd="dmenu -p $(cat $fcur) -fn $fnt -nb #$bg -nf #$lo -sb #$bg -sf #$fg"
 

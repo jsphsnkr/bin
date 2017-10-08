@@ -10,12 +10,11 @@ sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
 sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
 bw=256
 bh=30
-bx=$((sw - bw - 16))
-by=16
+bx=$((sw - bw - 20))
+by=20
 
 # arrange as lemonbar arguments
-opt="-g ${bw}x${bh}+${bx}+${by} -B #${bg} -F #${fg} -R #cccccc -r 2" 
+opt="-g ${bw}x${bh}+${bx}+${by} -B #${bg} -F #${fg}" 
 
 # create the popup
 (echo "%{c}$@"; sleep ${dur}) |  lemonbar -d $opt -f $fnt
-#echo "$@" | skroll -n 33 -r -d0.1 | lemonbar -d $opt -f "$fnt"

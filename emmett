@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# emmet - "Where we're going, we don't need bars!"
+#
+
+# get xresources colours
+. grabcolours.sh
+
+# lemonbar options
+sw=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)
+sh=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)
+bw=180
+bh=30
+bx=$((sw - bw - 20))
+by=20
+
+opt="-g ${bw}x${bh}+${bx}+${by} -B "#${bg}" -F "#${fg}""
+
+# status bits
+# clock
+clock() {
+	echo "$(date '+%a %H:%M')"
+}
+
+# battery
+battery() {
+	lvl=$(cat /sys/class/power_supply/BAT1/capacity)
+	stat=$(cat /sys/class/power_supply/BAT1/status)
+
+	buf="$lvl"
+	if [ $stat = "Full" ]
+	then
+		buf="$buf"
+	elif [ $stat = "Discharging" ]
+	then
+		buf="$buf--"
+	elif [ $stat = "Charging" ]
+	then
+		buf="$buf++"
+	fi
+
+	echo "$buf"
+}
+
+# music
+music() {
+	echo "$(murphy)"
+}
+
+(echo "%{c}$(battery)   $(clock)"; sleep 3) | lemonbar -d $opt -f "$fnt"
